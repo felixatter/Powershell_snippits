@@ -1,7 +1,7 @@
-$output = "%UserProfile%\Desktop\bigfiles.csv" #path to location of report CSV
-$input = "R:\" #drive or dir you want to evaluate
+$output = "D:\C-local\system tracking\bigfiles.csv" #path to location of report CSV
+$input = "R:\" #drive or dir you want to evaluate. must end in (\)char
 echo "folder\file,size in GB" > $output
 Get-ChildItem $input | foreach{
-    $size = (Get-ChildItem  $input\$_ -Recurse | Measure-Object -Property Length -Sum).Sum / 1Gb
-    echo "$_,$size" | tee $output
+    $size = (Get-ChildItem  "($input)$_" -Recurse | Measure-Object -Property Length -Sum).Sum / 1Gb
+    echo "$_,$size" | tee -Append $output
     }
